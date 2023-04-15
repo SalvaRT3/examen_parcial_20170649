@@ -25,12 +25,13 @@ SECRET_KEY = 'django-insecure-gm-8r$h7g(e@f(k^d_gzp3_#%%mc2v&$u+p)=5cg7ipu%nhmtn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'gestion_tienda',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
