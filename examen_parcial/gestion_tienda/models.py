@@ -16,4 +16,5 @@ class datosProducto(models.Model):
     codigo = models.CharField(max_length=32, default='000000000')
     precioCompra = models.CharField(max_length=32, default='0')
     PrecioVenta = models.CharField(max_length=32, default='0')
+    stockProducto = models.CharField(max_length=32, default='0')
     fechaventa = models.DateField(default=date.today)

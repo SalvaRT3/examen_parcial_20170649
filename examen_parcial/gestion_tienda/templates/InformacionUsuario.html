@@ -26,11 +26,13 @@
                 </div>
             </div>
         </div>
+        {% if user.datosusuario.rolUsuario == 'ADMINISTRADOR' %}
         <div class="container mt-3 mb-3">
             <div>
                 <a href="{% url 'gestion_tienda:gestionUsuarios' %}" class="btn btn-info"><i class="fa-solid fa-arrow-left"></i></a>
             </div>
         </div>
+        {% endif %}
         <div class="mt-5 text-center mb-3">
             <h1>Informacion del usuario: {{ usuarioInfo.first_name }} {{ usuarioInfo.last_name }}</h1>
         </div>

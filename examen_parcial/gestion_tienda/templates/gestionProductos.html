@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Pagina de gestion de usuarios</title>
+        <title>Pagina de gestion de productos</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -41,41 +41,42 @@
         </div>
         {% endif %}
         <div class="mt-5 text-center">
-            <h1>Gestion de Usuarios</h5>
+            <h1>Gestion de Productos</h5>
         </div>
         <div class="mt-5 container">
             <div class="row justify-content-between">
                 <div class="col-2">
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoUsuario"><i class="fa-solid fa-user-plus"></i> Agregar Usuario</button>
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoProducto"><i class="fa-solid fa-user-plus"></i> Agregar Producto</button>
                 </div>
             </div>
         </div>
         <div class="mt-5 container">
             <div class="row justify-content-center">
                 <div class="col-8">
-                    <table class="table table-bordered" align-middle>
+                    <table class="table table-bordered align-middle">
                         <thead class="table-dark align-middle">
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Numero de celular</th>
-                            <th>Fecha de ingreso</th>
-                            <th>Ver</th>
+                            <th>Orden</th>
+                            <th>Nombre del Producto</th>
+                            <th>Codigo</th>
+                            <th>Precio Compra soles</th>
+                            <th>Precio Venta soles</th>
+                            <th>Vendedor</th>
+                            <th>Fecha de registro</th>
+                            <th>Stock</th>
                             <th>Eliminar</th>
                         </thead>
                         <tbody>
-                            {% for usuario in usuariosTotales %}
+                            {% for producto in productosTotales %}
                                 <tr>
-                                    <td>{{ usuario.first_name }}</td>
-                                    <td>{{ usuario.last_name }}</td>
-                                    <td>{{ usuario.datosusuario.nroCelular }}</td>
-                                    <td>{{ usuario.datosusuario.fechaIngreso|date:"d-m-Y" }}</td>
-                                    {% if usuario == user %}
-                                        <td></td>
-                                        <td></td>
-                                    {% else %}
-                                        <td class="text-center"><a href="{% url 'gestion_tienda:verusuarios' usuario.id %}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a></td>
-                                        <td class="text-center"><a href="{% url 'gestion_tienda:eliminarUsuario' usuario.id %}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a></td>
-                                    {% endif %}
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ producto.nameProducto }}</td>
+                                    <td>{{ producto.codigo }}</td>
+                                    <td>{{ producto.precioCompra }}</td>
+                                    <td>{{ producto.PrecioVenta }}</td>
+                                    <td>{{ producto.vendedor }}</td>
+                                    <td>{{ producto.fechaventa|date:"d-m-Y" }}</td>
+                                    <td>{{ producto.stockProducto }}</td>
+                                    <td class="text-center"><a href="{% url 'gestion_tienda:eliminarProducto' producto.id %}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a></td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -86,56 +87,43 @@
     </body>
 </html>
 
-<!--Nuevo Usuario-->>
+<!--Nuevo Producto-->>
 
-<div class="modal fade" id="nuevoUsuario" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="nuevoProducto" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form method="post" action="{% url 'gestion_tienda:gestionUsuarios' %}">
+            <form method="post" action="{% url 'gestion_tienda:nuevoProducto' user.id %}">
                 {% csrf_token %}
                 <div class="modal-header">
-                    <h5 class="modal-title">Nuevo usuario</h5>
+                    <h5 class="modal-title">Nuevo Producto</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row form-group justify-content-around mb-3">
                         <div class="col-5">
-                            <label>Nombre de usuario</label>
-                            <input class="form-control" type="text" required name="usernameUsuario">
+                            <label>Nombre del Producto</label>
+                            <input class="form-control" type="text" required name="usernameProducto">
                         </div>
                         <div class="col-5">
-                            <label>Password</label>
-                            <input class="form-control" type="password" required name="contraUsuario">
+                            <label>Codigo del Producto</label>
+                            <input class="form-control" type="text" required name="codProducto">
                         </div>
                     </div>
                     <div class="row form-group justify-content-around mb-3">
                         <div class="col-5">
-                            <label>Nombre</label>
-                            <input class="form-control" type="text" required name="nombreUsuario">
+                            <label>Precio Compra (soles)</label>
+                            <input class="form-control" type="text" required name="preciocompraProducto">
                         </div>
                         <div class="col-5">
-                            <label>Apellido</label>
-                            <input class="form-control" type="text" required name="apellidoUsuario">
+                            <label>Precio Venta (soles)</label>
+                            <input class="form-control" type="text" required name="precioventaProducto">
                         </div>
                     </div>
-                    <div class="row form-group justify-content-around mb-3">
-                        <div class="col-5">
-                            <label>Rol del usuario</label>
-                            <select class="form-select" name="rolUsuario">
-                                <option value="VENDEDOR" selected>Vendedor</option>
-                                <option value="ADMINISTRADOR">Administrador</option>
-                            </select>
-                        </div>
-                        <div class="col-5">
-                            <label>Numero de celular</label>
-                            <input class="form-control" type="text" required name="nroCelular">
-                        </div>
-                    </div>
-                    <div class="row form-group justify-content-around mb-3">
-                        <div class="col-5">
-                            <label>Email</label>
-                            <input class="form-control" type="email" required name="emailUsuario" required>
-                        </div>
+                </div>
+                <div class="row form-group justify-content-around mb-3">
+                    <div class="col-5">
+                        <label>Stock </label>
+                        <input class="form-control" type="text" required name="stockProducto">
                     </div>
                 </div>
                 <div class="modal-footer">
