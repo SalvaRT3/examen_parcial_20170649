@@ -6,10 +6,13 @@ Pagina de gestion de una tienda de abarrotes, se puede agregar o quitar vendedor
 Pruebas Para el acceso:
 
 Administrador:
+
 username: Salvador
+
 password: Salvador
 
 Vendedor:
 
 username: Maira
+
 password: Maira
