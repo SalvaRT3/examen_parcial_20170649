@@ -64,9 +64,9 @@
                                         <td></td>
                                         <td></td>
                                     {% else %}
-                                        <td class="text-center"><a href="#" class="btn btn-info"><i class="fa-solid fa-eye"></i></a></td>
-                                        <td class="text-center"><a class="btn btn-warning"><i class="fa-solid fa-edit"></i></a></td>
-                                        <td class="text-center"><a href="#" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a></td>
+                                        <td class="text-center"><a href="{% url 'gestion_tienda:verusuarios' usuario.id %}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a></td>
+                                        <td class="text-center"><a href="#" class="btn btn-warning"><i class="fa-solid fa-edit"></i></a></td>
+                                        <td class="text-center"><a href="{% url 'gestion_tienda:eliminarUsuario' usuario.id %}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a></td>
                                     {% endif %}
                                 </tr>
                             {% endfor %}
@@ -83,7 +83,7 @@
 <div class="modal fade" id="nuevoUsuario" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form method="post" action="{% url 'gestion_tienda:consolaAdministrador' %}">
+            <form method="post" action="{% url 'gestion_tienda:gestionUsuarios' %}">
                 {% csrf_token %}
                 <div class="modal-header">
                     <h5 class="modal-title">Nuevo usuario</h5>

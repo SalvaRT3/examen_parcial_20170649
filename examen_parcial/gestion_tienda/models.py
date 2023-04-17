@@ -10,9 +10,10 @@ class datosUsuario(models.Model):
     nroCelular = models.CharField(max_length=32, default='000000000')
     fechaIngreso = models.DateField(default=date.today)
 
-#class datosProducto(models.Model):
-#    nameProducto = models.CharField(max_length=32, default='VENDEDOR')
-#    user = models.OneToOneField(datosUsuario, on_delete=models.CASCADE)
-#    codigo = models.CharField(max_length=32, default='VENDEDOR')
-#    precioCompra = models.CharField(max_length=32, default='VENDEDOR')
-#    PrecioVenta = models.CharField(max_length=32, default='VENDEDOR')
+class datosProducto(models.Model):
+    vendedor = models.ForeignKey(User, on_delete=models.CASCADE)
+    nameProducto = models.CharField(max_length=32, default='000000000')
+    codigo = models.CharField(max_length=32, default='000000000')
+    precioCompra = models.CharField(max_length=32, default='0')
+    PrecioVenta = models.CharField(max_length=32, default='0')
+    fechaventa = models.DateField(default=date.today)

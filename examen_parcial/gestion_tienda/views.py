@@ -15,13 +15,21 @@ def index(request):
         usuarioInfo = authenticate(request, username=nombreUsuario, password=contraUsuario)
         if usuarioInfo is not None:
             login(request, usuarioInfo)
-            return HttpResponseRedirect(reverse('gestion_tienda:consolaAdministrador'))
+            if usuarioInfo.datosusuario.rolUsuario == 'ADMINISTRADOR':
+                return HttpResponseRedirect(reverse('gestion_tienda:gestionUsuarios'))
+            else:
+                return HttpResponseRedirect(reverse('gestion_tienda:index'))
         else:
             return HttpResponseRedirect(reverse('gestion_tienda:index')) 
     return render(request, 'login.html')
 
 @login_required(login_url="http://127.0.0.1:8000/")
-def consolaAdministrador(request):
+def cerrarSesion(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('gestion_tienda:index'))
+
+@login_required(login_url="http://127.0.0.1:8000/")
+def gestionUsuarios(request):
     if request.method == 'POST':
         usernameUsuario = request.POST.get('usernameUsuario') 
         contraUsuario = request.POST.get('contraUsuario') 
@@ -44,18 +52,24 @@ def consolaAdministrador(request):
             rolUsuario = rolUsuario,
             nroCelular = nroCelular
         )
-        return HttpResponseRedirect(reverse('gestion_tienda:consolaAdministrador'))
-    return render(request, 'consolaAdministrador.html', {
+        return HttpResponseRedirect(reverse('gestion_tienda:gestionUsuarios'))
+    return render(request, 'gestionUsuarios.html', {
         'usuariosTotales': User.objects.all().order_by('id')
     })
 
 @login_required(login_url="http://127.0.0.1:8000/")
-def cerrarSesion(request):
-    logout(request)
-    return HttpResponseRedirect(reverse('gestion_tienda:index'))
+def eliminarUsuario(request, ind):
+    usuarioEliminar = User.objects.get(id=ind)
+    datosUsuario.objects.get(user=usuarioEliminar).delete()
+    usuarioEliminar.delete()
+    return HttpResponseRedirect(reverse('gestion_tienda:gestionUsuarios'))
 
-def usuarios(request):
-    return HttpResponse('Ruta de usuarios')
+@login_required(login_url="http://127.0.0.1:8000/")
+def verusuarios(request, ind):
+    usuarioInformacion = User.objects.get(id=ind)
+    return render(request, 'InformacionUsuario.html', {
+        'usuarioInfo': usuarioInformacion,
+    })
 
 def productos(request):
     return HttpResponse('Ruta de productos')

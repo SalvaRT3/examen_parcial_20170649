@@ -5,8 +5,8 @@ app_name = 'gestion_tienda'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('consolaAdministrador', views.consolaAdministrador, name='consolaAdministrador'),
     path('cerrarSesion', views.cerrarSesion, name='cerrarSesion'),
-    path('gestion-usuarios', views.usuarios, name='usuarios'),
-    path('gestion-productos', views.productos, name='productos'),
+    path('gestionUsuarios', views.gestionUsuarios, name='gestionUsuarios'),
+    path('eliminarUsuario/<str:ind>', views.eliminarUsuario, name='eliminarUsuario'),
+    path('verusuarios/<str:ind>', views.verusuarios, name='verusuarios'),
 ]
