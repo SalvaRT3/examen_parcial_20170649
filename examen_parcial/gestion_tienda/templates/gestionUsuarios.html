@@ -48,6 +48,9 @@
                 <div class="col-2">
                     <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoUsuario"><i class="fa-solid fa-user-plus"></i> Agregar Usuario</button>
                 </div>
+                <div class="col-2">
+                    <a class="btn btn-success" href="{% url 'gestion_tienda:descargarReporteUsuarios' user.id %}"><i class="fa-solid fa-download"></i> Descargar</a>
+                </div>
             </div>
         </div>
         <div class="mt-5 container">
